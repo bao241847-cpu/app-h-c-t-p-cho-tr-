@@ -1,0 +1,585 @@
+/**
+ * Tiện ích xuất ứng dụng thành MỘT FILE HTML DUY NHẤT (Single-file HTML)
+ * Chứa toàn bộ CSS, JavaScript, Âm thanh Web Audio, Web Speech tiếng Việt
+ * Phụ huynh và giáo viên chỉ cần bấm tải về là mở trên bất kỳ máy tính/điện thoại nào không cần internet hay cài đặt!
+ */
+
+export function downloadStandaloneHtml(): void {
+  const standaloneContent = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bé Vui Học Chính Tả Lớp 1 - Phiên Bản Độc Lập</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Mali:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background: linear-gradient(135deg, #fef9c3 0%, #fff7ed 50%, #fef3c7 100%);
+      color: #334155;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+    header {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 16px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border: 3px solid #fde047;
+    }
+    .title-group { display: flex; align-items: center; gap: 12px; }
+    .mascot-avatar { font-size: 42px; animation: bounce 2s infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    h1 { font-size: 24px; color: #b45309; font-weight: 800; }
+    .subtitle { font-size: 13px; color: #78716c; }
+    .stats-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fef08a;
+      color: #854d0e;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 4px 6px -1px rgba(202, 138, 4, 0.2);
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 14px 16px;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      background: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    .tab-btn.active {
+      background: #f59e0b;
+      color: #ffffff;
+      box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.4);
+      transform: translateY(-2px);
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+      border: 2px solid #fef08a;
+      margin-bottom: 20px;
+    }
+    /* Vở ô ly */
+    .notebook-paper {
+      background-color: #ffffff;
+      background-image: 
+        linear-gradient(to right, rgba(14, 165, 233, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(14, 165, 233, 0.25) 1px, transparent 1px),
+        linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+      border-radius: 20px;
+      padding: 24px;
+      border: 2px solid #bae6fd;
+      position: relative;
+    }
+    .notebook-paper::before {
+      content: '';
+      position: absolute;
+      left: 45px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: rgba(239, 68, 68, 0.45);
+    }
+    .speech-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-sound {
+      flex: 1;
+      padding: 16px 20px;
+      border: none;
+      border-radius: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .btn-sound-normal { background: #38bdf8; color: #ffffff; }
+    .btn-sound-normal:hover { background: #0284c7; }
+    .btn-sound-slow { background: #ec4899; color: #ffffff; }
+    .btn-sound-slow:hover { background: #db2777; }
+    .input-box {
+      width: 100%;
+      padding: 18px 24px;
+      font-size: 26px;
+      font-weight: 700;
+      border: 3px solid #facc15;
+      border-radius: 18px;
+      outline: none;
+      text-align: center;
+      color: #1e293b;
+      background: rgba(255, 255, 255, 0.95);
+      margin-bottom: 16px;
+    }
+    .input-box:focus { border-color: #f59e0b; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2); }
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 18px;
+      background: #10b981;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 16px -2px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: #059669; transform: translateY(-2px); }
+    .feedback-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      animation: pop 0.3s ease;
+    }
+    .feedback-correct { background: #dcfce7; border: 2px solid #86efac; color: #166534; }
+    .feedback-wrong { background: #fee2e2; border: 2px solid #fca5a5; color: #991b1b; }
+    @keyframes pop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .option-btn {
+      padding: 24px;
+      border: 3px solid #e2e8f0;
+      border-radius: 22px;
+      background: #ffffff;
+      font-size: 32px;
+      font-weight: 800;
+      color: #3b82f6;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .option-btn:hover { border-color: #3b82f6; background: #eff6ff; transform: scale(1.02); }
+    .mascot-hint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fffbeb;
+      border: 2px dashed #fde68a;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-top: 16px;
+    }
+    .footer { text-align: center; margin-top: 30px; font-size: 13px; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-group">
+        <div class="mascot-avatar">🐰</div>
+        <div>
+          <h1>Bé Vui Học Chính Tả Lớp 1</h1>
+          <div class="subtitle">Luyện nghe - viết chậm &amp; Khắc phục lỗi âm vần dễ nhầm</div>
+        </div>
+      </div>
+      <div class="stats-badge">
+        <span>⭐ Ngôi sao:</span>
+        <span id="starCount">0</span>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('listen_write')">🎧 1. Luyện Nghe - Viết</button>
+      <button class="tab-btn" onclick="switchTab('quiz_confusion')">🎯 2. Từ Dễ Nhầm (ch/tr, s/x...)</button>
+      <button class="tab-btn" onclick="switchTab('rules_guide')">📖 3. Mẹo Nhớ Vàng Lớp 1</button>
+      <button class="tab-btn" onclick="switchTab('history')">📒 4. Sổ Lỗi Sai Của Bé</button>
+    </div>
+
+    <!-- TAB 1: LUYỆN NGHE - VIẾT CHẬM -->
+    <div id="tab_listen_write" class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <span style="font-weight:800; color:#b45309; font-size:18px;">Bài tập: Nghe cô đọc và viết lại</span>
+        <span id="levelBadge" style="background:#e0f2fe; color:#0369a1; padding:4px 12px; border-radius:99px; font-size:13px; font-weight:700;">Câu 1 / 10</span>
+      </div>
+
+      <div class="notebook-paper" style="margin-bottom:20px;">
+        <div style="text-align:center; padding: 20px 0;">
+          <div id="wordEmoji" style="font-size:64px; margin-bottom:8px;">🎋</div>
+          <div style="color:#0284c7; font-weight:700; font-size:16px;">Bé hãy bấm nút loa nghe cô đọc rồi gõ vào ô bên dưới nhé:</div>
+        </div>
+
+        <div class="speech-controls">
+          <button class="btn-sound btn-sound-normal" onclick="speakCurrent(false)">
+            <span>📢 Đọc Bình Thường</span>
+          </button>
+          <button class="btn-sound btn-sound-slow" onclick="speakCurrent(true)">
+            <span>🐢 Đọc Chậm Từng Tiếng</span>
+          </button>
+        </div>
+
+        <input type="text" id="userInput" class="input-box" placeholder="Bé gõ từ vào đây..." autocomplete="off">
+        <button class="btn-primary" onclick="checkAnswer()">Kiểm Tra Bài Viết ✨</button>
+
+        <div id="feedbackArea"></div>
+      </div>
+      
+      <div style="display:flex; justify-content:flex-end;">
+        <button onclick="nextWord()" style="background:#f1f5f9; border:none; padding:10px 18px; border-radius:14px; font-weight:700; color:#475569; cursor:pointer;">
+          Bỏ qua / Câu tiếp theo ➡️
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 2: TRẮC NGHIỆM TỪ DỄ NHẦM -->
+    <div id="tab_quiz_confusion" class="card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <span style="font-weight:800; color:#9333ea; font-size:18px;">Thử thách: Chọn chữ cái còn thiếu</span>
+        <span id="quizBadge" style="background:#f3e8ff; color:#7e22ce; padding:4px 12px; border-radius:99px; font-size:13px; font-weight:700;">Câu 1</span>
+      </div>
+
+      <div style="text-align:center; padding:20px 0;">
+        <div id="quizEmoji" style="font-size:72px;">🎋</div>
+        <div id="quizTemplate" style="font-size:36px; font-weight:800; color:#1e293b; margin:16px 0; letter-spacing:2px;">cây ___e</div>
+        <div id="quizMeaning" style="font-size:16px; color:#64748b; font-style:italic;">Cây tre xanh mát đầu làng.</div>
+      </div>
+
+      <div class="quiz-options" id="quizOptions"></div>
+      <div id="quizFeedback"></div>
+    </div>
+
+    <!-- TAB 3: MẸO NHỚ VÀNG -->
+    <div id="tab_rules_guide" class="card" style="display:none;">
+      <h2 style="color:#b45309; font-size:20px; font-weight:800; margin-bottom:16px;">🌟 Cẩm Nang Mẹo Nhớ Chính Tả Lớp 1</h2>
+      
+      <div style="background:#fffbeb; border:2px solid #fde68a; border-radius:20px; padding:18px; margin-bottom:14px;">
+        <h3 style="color:#b45309; font-size:17px; font-weight:800; margin-bottom:6px;">1. Quy tắc C và K</h3>
+        <p style="font-size:14px; line-height:1.6; color:#78350f;">
+          <strong>Chữ K:</strong> Chỉ đi với 3 nguyên âm: <strong>i, e, ê</strong> (cây kẹo, cái kim, cây kéo).<br>
+          <strong>Chữ C:</strong> Đi với các chữ còn lại: <strong>a, o, ô, u, ư</strong> (con cá, lá cờ, cái cua).
+        </p>
+      </div>
+
+      <div style="background:#ecfdf5; border:2px solid #a7f3d0; border-radius:20px; padding:18px; margin-bottom:14px;">
+        <h3 style="color:#065f46; font-size:17px; font-weight:800; margin-bottom:6px;">2. Quy tắc G và GH</h3>
+        <p style="font-size:14px; line-height:1.6; color:#047857;">
+          <strong>Chữ GH:</strong> Cũng chỉ đi cùng <strong>i, e, ê</strong> (cái ghế, ghi bài, con ghẹ).<br>
+          <strong>Chữ G:</strong> Đi cùng <strong>a, o, ô, u, ư</strong> (con gà, bàn gỗ, gấu bông).
+        </p>
+      </div>
+
+      <div style="background:#eff6ff; border:2px solid #bfdbfe; border-radius:20px; padding:18px; margin-bottom:14px;">
+        <h3 style="color:#1e40af; font-size:17px; font-weight:800; margin-bottom:6px;">3. Quy tắc NG và NGH</h3>
+        <p style="font-size:14px; line-height:1.6; color:#1d4ed8;">
+          <strong>Chữ NGH:</strong> Luôn đi trước <strong>i, e, ê</strong> (lắng nghe, suy nghĩ, con nghé).<br>
+          <strong>Chữ NG:</strong> Đi trước các nguyên âm khác (ngôi sao, ngà voi, ngô khoai).
+        </p>
+      </div>
+
+      <div style="background:#fff1f2; border:2px solid #fecdd3; border-radius:20px; padding:18px;">
+        <h3 style="color:#9f1239; font-size:17px; font-weight:800; margin-bottom:6px;">4. Phân biệt CH và TR</h3>
+        <p style="font-size:14px; line-height:1.6; color:#be123c;">
+          <strong>TR:</strong> Đọc uốn cong lưỡi (cây tre, con trâu, bầu trời).<br>
+          <strong>CH:</strong> Đọc nhẹ nhàng, thường chỉ đồ dùng trong nhà (cái chổi, cái chảo) hoặc họ hàng (cha, chú, chị, cháu).
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: SỔ LỖI SAI CỦA BÉ -->
+    <div id="tab_history" class="card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="color:#b45309; font-size:20px; font-weight:800;">📒 Sổ Tay Lỗi Sai &amp; Ôn Tập Của Bé</h2>
+        <button onclick="clearHistory()" style="background:#fee2e2; color:#b91c1c; border:none; padding:6px 14px; border-radius:12px; font-size:13px; font-weight:700; cursor:pointer;">Xóa lịch sử</button>
+      </div>
+      <p style="font-size:14px; color:#64748b; margin-bottom:16px;">Những từ bé từng viết nhầm sẽ được lưu lại đây để bố mẹ và thầy cô cùng bé rèn luyện lại:</p>
+      <div id="errorList"></div>
+    </div>
+
+    <div class="footer">
+      🌻 Ứng dụng giáo dục độc lập 1 file HTML dành riêng cho học sinh tiểu học Việt Nam
+    </div>
+  </div>
+
+  <script>
+    const WORDS = [
+      { id: '1', word: 'cây tre', template: 'cây ___e', options: ['tr', 'ch'], correct: 'tr', sentence: 'Cây tre xanh mát đầu làng.', emoji: '🎋', hint: 'Cây tre cao vút trên làng quê viết bằng chữ "tr" uốn lưỡi bé nhé!' },
+      { id: '2', word: 'con chim', template: 'con ___im', options: ['ch', 'tr'], correct: 'ch', sentence: 'Con chim hót líu lo trên cành.', emoji: '🐦', hint: 'Con chim nhỏ xinh viết bằng chữ "ch" nhẹ nhàng nha!' },
+      { id: '3', word: 'cây kẹo', template: 'cây ___ẹo', options: ['k', 'c'], correct: 'k', sentence: 'Cây kẹo que màu sắc ngọt ngào.', emoji: '🍭', hint: 'Đứng trước chữ "e" bắt buộc phải viết chữ "k" nha!' },
+      { id: '4', word: 'con cá', template: 'con ___á', options: ['c', 'k'], correct: 'c', sentence: 'Con cá vàng bơi trong bể kính.', emoji: '🐟', hint: 'Đứng trước chữ "a" là chữ "c" bé ngoan nhé!' },
+      { id: '5', word: 'cái ghế', template: 'cái ___ế', options: ['gh', 'g'], correct: 'gh', sentence: 'Bé ngồi ngay ngắn trên cái ghế gỗ.', emoji: '🪑', hint: 'Đứng trước chữ "ê" bắt buộc phải dùng "gh" kép!' },
+      { id: '6', word: 'con gà', template: 'con ___à', options: ['g', 'gh'], correct: 'g', sentence: 'Chú gà trống gáy ó ó o.', emoji: '🐓', hint: 'Đứng trước chữ "a" là chữ "g" đơn nhé!' },
+      { id: '7', word: 'lắng nghe', template: 'lắng ___e', options: ['ngh', 'ng'], correct: 'ngh', sentence: 'Bé chăm chú lắng nghe cô giảng bài.', emoji: '👂', hint: 'Đứng trước chữ "e" phải viết bằng "ngh" kép!' },
+      { id: '8', word: 'hoa sen', template: 'hoa ___en', options: ['s', 'x'], correct: 's', sentence: 'Hoa sen nở thơm ngát đầm quê.', emoji: '🪷', hint: 'Hoa sen thơm ngát dưới đầm viết bằng "s" cong lưỡi!' },
+      { id: '9', word: 'xe đạp', template: '___e đạp', options: ['x', 's'], correct: 'x', sentence: 'Bé tập đi xe đạp cùng bố.', emoji: '🚲', hint: 'Phương tiện giao thông xe cộ viết bằng chữ "x" nhẹ nhàng!' },
+      { id: '10', word: 'mặt trời', template: 'mặt ___ời', options: ['tr', 'ch'], correct: 'tr', sentence: 'Mặt trời tỏa ánh nắng ấm áp.', emoji: '☀️', hint: 'Mặt trời to lớn trên cao uốn lưỡi viết bằng "tr"!' }
+    ];
+
+    let currentIdx = 0;
+    let quizIdx = 0;
+    let stars = parseInt(localStorage.getItem('stars_lop1') || '0');
+    let errors = JSON.parse(localStorage.getItem('errors_lop1') || '[]');
+
+    function updateStats() {
+      document.getElementById('starCount').innerText = stars;
+      localStorage.setItem('stars_lop1', stars.toString());
+      localStorage.setItem('errors_lop1', JSON.stringify(errors));
+      renderHistory();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      ['listen_write', 'quiz_confusion', 'rules_guide', 'history'].forEach(id => {
+        document.getElementById('tab_' + id).style.display = (id === tabId) ? 'block' : 'none';
+      });
+      if (tabId === 'quiz_confusion') renderQuiz();
+    }
+
+    // Âm thanh
+    function playBeep(isSuccess) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (isSuccess) {
+          osc.frequency.setValueAtTime(523, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(1046, ctx.currentTime + 0.3);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.36);
+        } else {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(300, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.25);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.28);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.3);
+        }
+      } catch (e) {}
+    }
+
+    const PHONETICS = {
+      'ch': 'chờ', 'tr': 'trờ', 's': 'sờ', 'x': 'xờ',
+      'c': 'cờ', 'k': 'ca', 'g': 'gờ', 'gh': 'gờ',
+      'ng': 'ngờ', 'ngh': 'ngờ', 'd': 'dờ', 'gi': 'gi',
+      'r': 'rờ', 'l': 'lờ', 'n': 'nờ'
+    };
+
+    function getVnVoice() {
+      if (!('speechSynthesis' in window)) return null;
+      const voices = window.speechSynthesis.getVoices();
+      const exact = voices.find(v => v.lang.startsWith('vi') || v.lang.includes('VIE'));
+      if (exact) return exact;
+      return voices.find(v => v.name.toLowerCase().includes('vietnam') || v.name.toLowerCase().includes('mai') || v.name.toLowerCase().includes('chi'));
+    }
+
+    // Đọc giọng tiếng Việt chuẩn
+    function speakCurrent(slow) {
+      if (!('speechSynthesis' in window)) {
+        alert('Trình duyệt của bạn chưa hỗ trợ giọng nói.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const current = WORDS[currentIdx];
+      const u = new SpeechSynthesisUtterance(current.word);
+      u.lang = 'vi-VN';
+      u.rate = slow ? 0.6 : 0.85;
+      u.pitch = 1.05;
+      const v = getVnVoice();
+      if (v) u.voice = v;
+      window.speechSynthesis.speak(u);
+    }
+
+    function pronouncePhoneme(phoneme) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const spoken = PHONETICS[phoneme.toLowerCase()] || phoneme;
+      const u = new SpeechSynthesisUtterance(spoken);
+      u.lang = 'vi-VN';
+      u.rate = 0.8;
+      const v = getVnVoice();
+      if (v) u.voice = v;
+      window.speechSynthesis.speak(u);
+    }
+
+    function loadCurrentWord() {
+      const cur = WORDS[currentIdx];
+      document.getElementById('wordEmoji').innerText = cur.emoji;
+      document.getElementById('levelBadge').innerText = 'Từ ' + (currentIdx + 1) + ' / ' + WORDS.length;
+      document.getElementById('userInput').value = '';
+      document.getElementById('feedbackArea').innerHTML = '';
+      document.getElementById('userInput').focus();
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('userInput').value.trim().toLowerCase();
+      const cur = WORDS[currentIdx];
+      const feedback = document.getElementById('feedbackArea');
+
+      if (!input) {
+        alert('Bé ơi, bé gõ từ vừa nghe được vào ô nhé!');
+        return;
+      }
+
+      if (input === cur.word.toLowerCase()) {
+        playBeep(true);
+        stars += 2;
+        updateStats();
+        feedback.innerHTML = '<div class="feedback-box feedback-correct">' +
+          '<div style="font-size:22px; font-weight:800; margin-bottom:4px;">🎉 Giỏi quá! Bé viết hoàn toàn chính xác!</div>' +
+          '<div>+2 ngôi sao thưởng ⭐⭐. ' + cur.hint + '</div>' +
+          '</div>';
+      } else {
+        playBeep(false);
+        if (!errors.some(e => e.word === cur.word)) {
+          errors.push({ word: cur.word, wrongInput: input, hint: cur.hint, date: new Date().toLocaleDateString('vi-VN') });
+          updateStats();
+        }
+        feedback.innerHTML = '<div class="feedback-box feedback-wrong">' +
+          '<div style="font-size:20px; font-weight:800; margin-bottom:4px;">🌱 Bé ơi, chú ý một xíu nha!</div>' +
+          '<div>Từ đúng là: <strong style="font-size:22px; color:#b91c1c;">' + cur.word + '</strong></div>' +
+          '<div style="margin-top:8px; font-size:14px; background:#fff; padding:10px; border-radius:12px;">💡 Mẹo của cô giáo: ' + cur.hint + '</div>' +
+          '</div>';
+      }
+    }
+
+    function nextWord() {
+      currentIdx = (currentIdx + 1) % WORDS.length;
+      loadCurrentWord();
+    }
+
+    // Quiz Tab
+    function renderQuiz() {
+      const cur = WORDS[quizIdx];
+      document.getElementById('quizEmoji').innerText = cur.emoji;
+      document.getElementById('quizTemplate').innerText = cur.template;
+      document.getElementById('quizMeaning').innerText = cur.sentence;
+      document.getElementById('quizBadge').innerText = 'Câu ' + (quizIdx + 1) + ' / ' + WORDS.length;
+      document.getElementById('quizFeedback').innerHTML = '';
+
+      const container = document.getElementById('quizOptions');
+      container.innerHTML = '';
+      cur.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => selectQuizOption(opt);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectQuizOption(chosen) {
+      const cur = WORDS[quizIdx];
+      const fb = document.getElementById('quizFeedback');
+      if (chosen === cur.correct) {
+        playBeep(true);
+        stars += 1;
+        updateStats();
+        fb.innerHTML = '<div class="feedback-box feedback-correct">' +
+          '<div style="font-weight:800; font-size:18px;">✨ Hoan hô bé! Bé chọn đúng rồi! (+1 ⭐)</div>' +
+          '<div>' + cur.hint + '</div>' +
+          '<button onclick="nextQuiz()" style="margin-top:12px; background:#10b981; color:#fff; border:none; padding:10px 18px; border-radius:12px; font-weight:700; cursor:pointer;">Câu tiếp theo ➡️</button>' +
+          '</div>';
+      } else {
+        playBeep(false);
+        fb.innerHTML = '<div class="feedback-box feedback-wrong">' +
+          '<div style="font-weight:800; font-size:18px;">🌱 Chưa chính xác rồi, bé thử lại nhé!</div>' +
+          '<div>Mẹo nhỏ: ' + cur.hint + '</div>' +
+          '</div>';
+      }
+    }
+
+    function nextQuiz() {
+      quizIdx = (quizIdx + 1) % WORDS.length;
+      renderQuiz();
+    }
+
+    function renderHistory() {
+      const list = document.getElementById('errorList');
+      if (!list) return;
+      if (errors.length === 0) {
+        list.innerHTML = '<div style="text-align:center; padding:30px; color:#10b981; font-weight:700;">🌟 Tuyệt vời! Sổ tay chưa có lỗi sai nào. Bé học rất giỏi!</div>';
+        return;
+      }
+      let html = '';
+      errors.forEach((err, idx) => {
+        html += '<div style="background:#f8fafc; border:2px solid #e2e8f0; border-radius:16px; padding:16px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">' +
+          '<div>' +
+            '<div style="font-size:18px; font-weight:800; color:#1e293b;">Từ cần viết: <span style="color:#059669;">' + err.word + '</span></div>' +
+            '<div style="font-size:14px; color:#ef4444;">Bé từng viết: ' + (err.wrongInput || '...') + '</div>' +
+            '<div style="font-size:13px; color:#64748b; margin-top:4px;">💡 ' + err.hint + '</div>' +
+          '</div>' +
+          '<button onclick="practiceError(' + idx + ')" style="background:#fef08a; border:2px solid #facc15; padding:8px 14px; border-radius:12px; font-weight:800; color:#854d0e; cursor:pointer;">Luyện từ này 🎯</button>' +
+        '</div>';
+      });
+      list.innerHTML = html;
+    }
+
+    function practiceError(idx) {
+      const err = errors[idx];
+      const wordObj = WORDS.find(w => w.word === err.word);
+      if (wordObj) {
+        currentIdx = WORDS.indexOf(wordObj);
+        switchTab('listen_write');
+        loadCurrentWord();
+      }
+    }
+
+    function clearHistory() {
+      if (confirm('Bé có muốn xóa danh sách các từ đã sai để bắt đầu sổ tay mới không?')) {
+        errors = [];
+        updateStats();
+      }
+    }
+
+    // Khởi động
+    updateStats();
+    loadCurrentWord();
+  </script>
+</body>
+</html>`;
+
+  const blob = new Blob([standaloneContent], { type: 'text/html;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'Be_Vui_Hoc_Chinh_Ta_Lop_1_Offline.html');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}

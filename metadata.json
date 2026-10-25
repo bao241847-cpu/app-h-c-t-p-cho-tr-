@@ -1,0 +1,11 @@
+{
+  "name": "Bé Vui Học Chính Tả Lớp 1",
+  "description": "Ứng dụng giáo dục hỗ trợ học sinh lớp 1 luyện chính tả, khắc phục viết sai âm vần dễ nhầm, luyện nghe - chép chậm chuẩn ngữ nghĩa, kiểm tra bài viết qua camera và sổ tay lỗi sai.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
+

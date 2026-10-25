@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper kiểm tra tài khoản Giáo Viên duy nhất có quyền quản trị
+    function isTeacher() {
+      return request.auth != null && 
+        request.auth.token.email == "bao241847@gmail.com";
+    }
+
+    // 1. BỘ SÁCH GIÁO KHOA LỚP 2
+    // Mọi người (học sinh và khách) được xem, đọc; chỉ giáo viên được thêm, sửa, xóa
+    match /spelling_books/{bookId} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // 2. BÀI HỌC / TUẦN
+    // Mọi học sinh được xem bài học; chỉ giáo viên được thêm, sửa, xóa
+    match /spelling_lessons/{lessonId} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // 3. TỪ VÀ CÂU LUYỆN VIẾT
+    // Mọi học sinh được đọc để luyện nghe viết; chỉ giáo viên được thêm, sửa, xóa
+    match /spelling_words/{wordId} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // 4. TIẾN ĐỘ VÀ SỔ TỪ KHÓ CỦA HỌC SINH (Theo thiết bị hoặc tên học sinh)
+    // Học sinh tự ghi nhận kết quả làm bài của mình mà không cần tạo tài khoản
+    match /student_activity/{activityId} {
+      allow read, create: if true;
+      allow update, delete: if isTeacher();
+    }
+
+    // Mặc định từ chối các đường dẫn còn lại
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
